@@ -14,10 +14,11 @@ export default NextAuth({
         },
       },
     }),
-  ],
+],
   callbacks: {
     async signIn({ user, account, profile }) {
       const { email } = user;
+      console.log(user)
       try {
         await fauna.query(
           q.If(
@@ -31,9 +32,11 @@ export default NextAuth({
           )
         );
         return true;
-      } catch {
+      } catch (error) {
+        console.log("ERROR =>",error);
         return false;
       }
     },
+    
   },
 });
